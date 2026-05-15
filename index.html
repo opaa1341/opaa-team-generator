@@ -132,9 +132,13 @@
       Generate Teams
     </button>
 
-    <button class="clear-btn" onclick="clearPlayers()">
-      Clear All Players
-    </button>
+    <button 
+  class="clear-btn" 
+  onclick="clearPlayers()"
+  style="display: ${isAdmin ? 'block' : 'none'};"
+>
+  Clear All Players
+</button>
 
     <div class="players-list">
       <h2>Player List</h2>
@@ -171,7 +175,10 @@ import {
   collection,
   addDoc,
   getDocs,
-  onSnapshot
+onSnapshot,
+deleteDoc,
+query,
+where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -187,7 +194,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let players = [];
-
+const isAdmin = window.location.search.includes("admin=opaa1341");
 async function addPlayer() {
   const name = document.getElementById('name').value.trim();
   const power = parseInt(document.getElementById('power').value);
@@ -216,7 +223,16 @@ if (duplicate) {
 }
 
 window.addPlayer = addPlayer;
+async function removePlayer(name) {
+  const q = query(collection(db, "players"), where("name", "==", name));
+  const querySnapshot = await getDocs(q);
 
+  querySnapshot.forEach(async (document) => {
+    await deleteDoc(document.ref);
+  });
+}
+
+window.removePlayer = removePlayer;
 function renderPlayers() {
   const container = document.getElementById('players');
 
@@ -231,6 +247,12 @@ function renderPlayers() {
     container.innerHTML += `
       <div class=\"player-item\">
         <span>${index + 1}. ${player.name} - ${player.power}</span>
+
+${isAdmin ? `
+<button onclick="removePlayer('${player.name}')">
+  Remove
+</button>
+` : ''}
       </div>
     `;
   });
@@ -295,7 +317,19 @@ players.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
 renderPlayers();
 
 });
+async function clearPlayers() {
+  const confirmClear = confirm("Delete all players?");
 
+  if (!confirmClear) return;
+
+  const snapshot = await getDocs(collection(db, "players"));
+
+  snapshot.forEach(async (document) => {
+    await deleteDoc(document.ref);
+  });
+}
+
+window.clearPlayers = clearPlayers;
   </script>
   <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
     [OPAA] - 1341
