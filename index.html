@@ -233,13 +233,17 @@ function generateTeams() {
   let teamA = [];
   let teamB = [];
 
-  players.forEach(player => {
-    if (player.power % 2 === 0) {
-      teamB.push(player);
-    } else {
-      teamA.push(player);
-    }
-  });
+  players.sort((a, b) => b.power - a.power);
+
+players.forEach((player, index) => {
+  const rank = index + 1;
+
+  if (rank % 2 === 1) {
+    teamA.push(player);
+  } else {
+    teamB.push(player);
+  }
+});
 
   teamA.sort((a, b) => b.power - a.power);
   teamB.sort((a, b) => b.power - a.power);
