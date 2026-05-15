@@ -131,7 +131,17 @@
     <button class="generate-btn" onclick="generateTeams()">
       Generate Teams
     </button>
+<div id="announcementAdminPanel" style="display:none;">
 
+  <button class="generate-btn" onclick="generateAnnouncement('A')">
+    Generate Team A Position
+  </button>
+
+  <button class="generate-btn" onclick="generateAnnouncement('B')">
+    Generate Team B Position
+  </button>
+
+</div>
     <button 
   id="clearBtn"
   class="clear-btn" 
@@ -145,7 +155,35 @@
       <h2>Player List</h2>
       <div id="players"></div>
     </div>
+<div 
+  id="announcementBoxContainer"
+  class="players-list"
+  style="display:none;"
+>
+  <h2>Announcement</h2>
 
+  <textarea
+    id="announcementBox"
+    style="
+      width:100%;
+      height:500px;
+      background:#111;
+      color:white;
+      border:none;
+      padding:15px;
+      border-radius:10px;
+      resize:vertical;
+    "
+  ></textarea>
+
+  <button
+    class="generate-btn"
+    onclick="copyAnnouncement()"
+    style="margin-top:10px;"
+  >
+    Copy Announcement
+  </button>
+</div>
     <div class="teams">
       <div class="team-box">
         <h2 id="teamATitle">
@@ -372,7 +410,14 @@ window.clearPlayers = clearPlayers;
 }
 
 window.copyTeam = copyTeam;
-    if (isAdmin) {
+   if (isAdmin) {
+
+  document.getElementById("announcementAdminPanel").style.display = "block";
+
+  document.getElementById("announcementBoxContainer").style.display = "block";
+
+   }
+      if (isAdmin) {
   document.getElementById("clearBtn").style.display = "block";
 
   document.getElementById("teamATitle").innerHTML += `
@@ -387,6 +432,129 @@ window.copyTeam = copyTeam;
     </button>
   `;
     }
+  function getTeamRankPlayer(team, rank) {
+
+  let sortedPlayers = players
+    .slice()
+    .sort((a, b) => b.power - a.power);
+
+  let filtered = [];
+
+  sortedPlayers.forEach((player, index) => {
+
+    const globalRank = index + 1;
+
+    if (team === "A" && globalRank % 2 === 1) {
+      filtered.push(player);
+    }
+
+    if (team === "B" && globalRank % 2 === 0) {
+      filtered.push(player);
+    }
+
+  });
+
+  return filtered[rank - 1]?.name || "-";
+}
+
+function generateAnnouncement(team) {
+
+  const text = `
+⚔️ DESERT STORM TEAM ${team} POSITION ⚔️
+
+FIRST STAGE (FIRST 10 MINUTES)
+
+Hunters
+- ${getTeamRankPlayer(team, 1)}
+- ${getTeamRankPlayer(team, 2)}
+- ${getTeamRankPlayer(team, 3)}
+- ${getTeamRankPlayer(team, 4)}
+- ${getTeamRankPlayer(team, 5)}
+
+Science Hub
+Capturer : ${getTeamRankPlayer(team, 17)}
+1st Attacker : ${getTeamRankPlayer(team, 6)}
+2nd Attacker : ${getTeamRankPlayer(team, 16)}
+
+Hospital 1
+Capturer : ${getTeamRankPlayer(team, 15)}
+1st Attacker : ${getTeamRankPlayer(team, 7)}
+2nd Attacker : ${getTeamRankPlayer(team, 14)}
+
+Hospital 2
+Capturer : ${getTeamRankPlayer(team, 18)}
+1st Attacker : ${getTeamRankPlayer(team, 8)}
+2nd Attacker : ${getTeamRankPlayer(team, 13)}
+
+Hospital 3
+Capturer : ${getTeamRankPlayer(team, 19)}
+1st Attacker : ${getTeamRankPlayer(team, 9)}
+2nd Attacker : ${getTeamRankPlayer(team, 12)}
+
+Hospital 4
+Capturer : ${getTeamRankPlayer(team, 20)}
+1st Attacker : ${getTeamRankPlayer(team, 10)}
+2nd Attacker : ${getTeamRankPlayer(team, 11)}
+
+Info Center
+Capturer : -
+
+Oil Refinery 1
+Capturer : -
+
+Oil Refinery 2
+Capturer : -
+
+━━━━━━━━━━━━━━
+
+SECOND STAGE (AFTER FIRST 10 MINUTES)
+
+Nuclear Silo
+Capturer : ${getTeamRankPlayer(team, 1)}
+Attacker : ${getTeamRankPlayer(team, 2)}
+Attacker : ${getTeamRankPlayer(team, 3)}
+Attacker : ${getTeamRankPlayer(team, 6)}
+
+Arsenal
+Capturer : ${getTeamRankPlayer(team, 4)}
+Attacker : ${getTeamRankPlayer(team, 7)}
+Attacker : ${getTeamRankPlayer(team, 8)}
+
+Mercenary Factory
+Capturer : ${getTeamRankPlayer(team, 5)}
+Attacker : ${getTeamRankPlayer(team, 9)}
+Attacker : ${getTeamRankPlayer(team, 10)}
+
+━━━━━━━━━━━━━━
+
+SUBSTITUTE PLAYERS
+- ${getTeamRankPlayer(team, 21)}
+- ${getTeamRankPlayer(team, 22)}
+- ${getTeamRankPlayer(team, 23)}
+- ${getTeamRankPlayer(team, 24)}
+- ${getTeamRankPlayer(team, 25)}
+- ${getTeamRankPlayer(team, 26)}
+- ${getTeamRankPlayer(team, 27)}
+- ${getTeamRankPlayer(team, 28)}
+- ${getTeamRankPlayer(team, 29)}
+- ${getTeamRankPlayer(team, 30)}
+`;
+
+  document.getElementById("announcementBox").value = text;
+}
+
+window.generateAnnouncement = generateAnnouncement;
+
+function copyAnnouncement() {
+
+  const text = document.getElementById("announcementBox").value;
+
+  navigator.clipboard.writeText(text);
+
+  alert("Announcement copied!");
+}
+
+window.copyAnnouncement = copyAnnouncement;
     </script>
   <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
     [OPAA] - 1341
