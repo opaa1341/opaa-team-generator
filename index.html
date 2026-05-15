@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAA Team Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #121212;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .input-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      flex: 1;
+      min-width: 200px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .add-btn {
+      background: #4caf50;
+      color: white;
+    }
+
+    .generate-btn {
+      background: #2196f3;
+      color: white;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .clear-btn {
+      background: #f44336;
+      color: white;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .players-list {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .player-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .teams {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .team-box {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .team-box h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .section-title {
+      margin-top: 20px;
+      color: #90caf9;
+    }
+
+    .member {
+      padding: 6px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .empty {
+      opacity: 0.6;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OPAA Team Generator</h1>
+
+    <div class="input-box">
+      <input type="text" id="name" placeholder="Player Name" />
+      <input type="number" id="power" placeholder="Power" />
+      <button class="add-btn" onclick="addPlayer()">Add</button>
+    </div>
+
+    <button class="generate-btn" onclick="generateTeams()">
+      Generate Teams
+    </button>
+
+    <button class="clear-btn" onclick="clearPlayers()">
+      Clear All Players
+    </button>
+
+    <div class="players-list">
+      <h2>Player List</h2>
+      <div id="players"></div>
+    </div>
+
+    <div class="teams">
+      <div class="team-box">
+        <h2>TEAM A (ODD)</h2>
+        <h3 class="section-title">Main Team</h3>
+        <div id="teamAMain"></div>
+
+        <h3 class="section-title">Substitute</h3>
+        <div id="teamASub"></div>
+      </div>
+
+      <div class="team-box">
+        <h2>TEAM B (EVEN)</h2>
+        <h3 class="section-title">Main Team</h3>
+        <div id="teamBMain"></div>
+
+        <h3 class="section-title">Substitute</h3>
+        <div id="teamBSub"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let players = [];
+
+    function addPlayer() {
+      const name = document.getElementById('name').value.trim();
+      const power = parseInt(document.getElementById('power').value);
+
+      if (!name || isNaN(power)) {
+        alert('Please enter a valid player name and power!');
+        return;
+      }
+
+      players.push({ name, power });
+
+      document.getElementById('name').value = '';
+      document.getElementById('power').value = '';
+
+      renderPlayers();
+    }
+
+    function renderPlayers() {
+      const container = document.getElementById('players');
+
+      if (players.length === 0) {
+        container.innerHTML = '<div class="empty">No players added yet</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      players.forEach((player, index) => {
+        container.innerHTML += `
+          <div class="player-item">
+            <span>${index + 1}. ${player.name} - ${player.power}</span>
+            <button onclick="removePlayer(${index})">Remove</button>
+          </div>
+        `;
+      });
+    }
+
+    function removePlayer(index) {
+      players.splice(index, 1);
+      renderPlayers();
+    }
+
+    function clearPlayers() {
+      if (confirm('Are you sure you want to remove all players?')) {
+        players = [];
+        renderPlayers();
+        clearTeams();
+      }
+    }
+
+    function clearTeams() {
+      document.getElementById('teamAMain').innerHTML = '';
+      document.getElementById('teamASub').innerHTML = '';
+      document.getElementById('teamBMain').innerHTML = '';
+      document.getElementById('teamBSub').innerHTML = '';
+    }
+
+    function generateTeams() {
+      let teamA = [];
+      let teamB = [];
+
+      players.forEach(player => {
+        if (player.power % 2 === 0) {
+          teamB.push(player);
+        } else {
+          teamA.push(player);
+        }
+      });
+
+      teamA.sort((a, b) => b.power - a.power);
+      teamB.sort((a, b) => b.power - a.power);
+
+      const teamAMain = teamA.slice(0, 20);
+      const teamASub = teamA.slice(20, 30);
+
+      const teamBMain = teamB.slice(0, 20);
+      const teamBSub = teamB.slice(20, 30);
+
+      renderTeam('teamAMain', teamAMain);
+      renderTeam('teamASub', teamASub);
+      renderTeam('teamBMain', teamBMain);
+      renderTeam('teamBSub', teamBSub);
+    }
+
+    function renderTeam(id, team) {
+      const container = document.getElementById(id);
+
+      if (team.length === 0) {
+        container.innerHTML = '<div class="empty">No players available</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      team.forEach((player, index) => {
+        container.innerHTML += `
+          <div class="member">
+            ${index + 1}. ${player.name} - ${player.power}
+          </div>
+        `;
+      });
+    }
+
+    renderPlayers();
+  </script>
+  <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
+    [OPAA] - 1341
+  </div>
+</body>
+</html>
