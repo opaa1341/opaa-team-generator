@@ -198,9 +198,10 @@ async function addPlayer() {
   }
 
   await addDoc(collection(db, "players"), {
-    name,
-    power
-  });
+  name,
+  power,
+  createdAt: Date.now()
+});
 
   document.getElementById('name').value = '';
   document.getElementById('power').value = '';
@@ -278,11 +279,12 @@ onSnapshot(collection(db, "players"), (snapshot) => {
   players = [];
 
   snapshot.forEach((doc) => {
-    players.push(doc.data());
-  });
-
-  renderPlayers();
+  players.push(doc.data());
 });
+
+players.sort((a, b) => a.createdAt - b.createdAt);
+
+renderPlayers();
 
   </script>
   <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
