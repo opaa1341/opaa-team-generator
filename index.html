@@ -282,9 +282,11 @@ onSnapshot(collection(db, "players"), (snapshot) => {
   players.push(doc.data());
 });
 
-players.sort((a, b) => a.createdAt - b.createdAt);
+players.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
 
 renderPlayers();
+
+});
 
   </script>
   <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
