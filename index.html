@@ -80,7 +80,7 @@ letter-spacing: 1px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 10px;
       font-weight: bold;
     }
 
@@ -125,20 +125,7 @@ letter-spacing: 1px;
       gap: 20px;
     }
 
-    .team-box h2 {
-  margin-top: 0;
-
-  text-align: center;
-
-  color: #facc15;
-
-  font-family: 'Press Start 2P', cursive;
-
-  font-size: 16px;
-
-  text-shadow:
-    0 0 10px rgba(250,204,21,0.25);
-    }
+    .team-box {
   background: rgba(17, 24, 39, 0.92);
 
   border: 2px solid #1e3a8a;
@@ -151,7 +138,28 @@ letter-spacing: 1px;
     0 0 20px rgba(30,58,138,0.25);
 
   backdrop-filter: blur(6px);
-    }
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: 0.3s ease;
+}
+
+.team-box h2 {
+  margin-top: 0;
+
+  text-align: center;
+
+  color: #facc15;
+
+  font-family: 'Press Start 2P', cursive;
+
+  font-size: 16px;
+
+  text-shadow:
+    0 0 10px rgba(250,204,21,0.25);
+}
 
     .team-box h2 {
       margin-top: 0;
