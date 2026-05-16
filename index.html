@@ -162,7 +162,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 12px 10px;
+  padding: 10px 12px;
   margin-bottom: 8px;
 
   background: rgba(255, 255, 255, 0.04);
@@ -171,6 +171,7 @@
   border-radius: 12px;
 
   transition: 0.25s ease;
+      animation: fadeUp 0.25s ease;
     }
     .player-item:hover {
   transform: translateX(5px);
@@ -186,6 +187,7 @@
 
     .team-box {
   background: rgba(255, 255, 255, 0.06);
+
   border: 1px solid rgba(255, 255, 255, 0.12);
 
   border-radius: 16px;
@@ -197,11 +199,37 @@
   box-shadow: 0 8px 30px rgba(0,0,0,0.3);
 
   transition: 0.3s ease;
-}
+
+  position: relative;
+  overflow: hidden;
+    }
 
 .team-box:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+}
+    .team-box::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: radial-gradient(
+    circle at top,
+    rgba(96,165,250,0.12),
+    transparent 60%
+  );
+
+  opacity: 0;
+
+  transition: 0.3s ease;
+
+  pointer-events: none;
+}
+
+.team-box:hover::before {
+  opacity: 1;
 }
 .team-box h2 {
   margin-top: 0;
@@ -232,8 +260,19 @@
     }
 
     .section-title {
-      margin-top: 20px;
-      color: #90caf9;
+  margin-top: 20px;
+
+  margin-bottom: 12px;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: #64748b;
+
+  font-weight: 600;
     }
 
     .member {
@@ -241,7 +280,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 12px 10px;
+  padding: 10px 12px;
   margin-bottom: 8px;
 
   background: rgba(255, 255, 255, 0.04);
@@ -250,6 +289,7 @@
   border-radius: 12px;
 
   transition: 0.25s ease;
+      animation: fadeUp 0.25s ease;
 }
 
 .member:hover {
@@ -481,6 +521,17 @@ body::after {
 
   flex-shrink: 0;
 }
+    @keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+    }
   </style>
 </head>
 <body>
