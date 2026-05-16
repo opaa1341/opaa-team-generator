@@ -227,9 +227,25 @@
  }
   .top-header {
   text-align: center;
-
   margin-bottom: 35px;
-}
+
+  padding: 25px 20px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+
+  transition: 0.3s ease;
+  }
+    .top-header:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.25);
+    }
 
 .subtitle {
   color: #94a3b8;
