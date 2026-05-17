@@ -4,47 +4,116 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OPAA Team Generator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0b1120);
+      background: linear-gradient(135deg, #0f172a, #1e1b4b, #0b1120);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      animation: fadePage 0.5s ease;
+    }
 
-  color: white;
-  margin: 0;
-  padding: 20px;
-  min-height: 100vh;
-animation: fadePage 0.5s ease;
-  font-family: 'Inter', sans-serif;
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.4;
+    }
+    body::before {
+      background: #7c3aed;
+      top: -50px;
+      left: -50px;
+    }
+    body::after {
+      background: #3b82f6;
+      bottom: -80px;
+      right: -80px;
     }
 
     h1 {
-  text-align: center;
-  margin-bottom: 30px;
-
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  letter-spacing: 2px;
-  font-size: 28px;
-
-  text-transform: uppercase;
-
-  background: linear-gradient(90deg, #60a5fa, #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow: 0 4px 20px rgba(96, 165, 250, 0.25);
-}
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 28px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 20px rgba(96, 165, 250, 0.25);
+    }
 
     .container {
       max-width: 1200px;
       margin: auto;
+    }
+
+    .top-header {
+      text-align: center;
+      margin-bottom: 35px;
+      padding: 28px 24px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .top-header:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 50px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .top-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    .top-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      pointer-events: none;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      margin-top: 10px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 8px;
+      box-shadow: 0 0 10px #22c55e;
     }
 
     .input-box {
@@ -55,164 +124,186 @@ animation: fadePage 0.5s ease;
     }
 
     input {
-  background: rgba(255,255,255,0.06);
-
-  color: white;
-
-  border: 1px solid rgba(255,255,255,0.08);
-
-  padding: 14px;
-
-  border-radius: 14px;
-
-  flex: 1;
-
-  min-width: 200px;
-
-  font-size: 15px;
-
-  outline: none;
-
-  transition: 0.25s ease;
-
-  backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 14px;
+      border-radius: 14px;
+      flex: 1;
+      min-width: 200px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.25s ease;
+      backdrop-filter: blur(6px);
     }
+
     input::placeholder {
-  color: #94a3b8;
+      color: #94a3b8;
     }
-    input:focus {
-  border-color: #3b82f6;
 
-  box-shadow:
-    0 0 15px rgba(59,130,246,0.4);
+    input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 15px rgba(59,130,246,0.4);
     }
 
     button {
-  transition: 0.25s ease;
+      transition: 0.25s ease;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      letter-spacing: 1px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-  font-family: 'Inter', sans-serif;
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 0 0 15px rgba(255,255,255,0.15);
+    }
 
-  font-size: 12px;
-
-  border: 1px solid rgba(255,255,255,0.08);
-
-  letter-spacing: 1px;
-
-  padding: 12px 18px;
-
-  border-radius: 8px;
-
-  cursor: pointer;
-
-  font-weight: bold;
+    button:active {
+      transform: scale(0.97);
     }
 
     .add-btn {
-  background: linear-gradient(
-    135deg,
-    #22c55e,
-    #16a34a
-  );
-
-  color: white;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
     }
 
     .generate-btn {
-  position: relative;
-overflow: hidden;
-      background: linear-gradient(
-    135deg,
-    #2563eb,
-    #1d4ed8
-  );
-
-  color: white;
-
-  width: 100%;
-
-  margin-bottom: 20px;
-    }
-    .generate-btn::before {
-  content: "";
-
-  position: absolute;
-  top: 0;
-  left: -100%;
-
-  width: 100%;
-  height: 100%;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.18),
-    transparent
-  );
-
-  transition: 0.5s;
-}
-
-.generate-btn:hover::before {
-  left: 100%;
-}
-
-    .clear-btn {
-  background: linear-gradient(
-    135deg,
-    #ef4444,
-    #dc2626
-  );
-
-  color: white;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      width: 100%;
       margin-bottom: 20px;
     }
 
-    .players-list {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  padding: 15px;
-  border-radius: 16px;
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-
-  transition: 0.3s ease;
+    .generate-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transition: 0.5s;
     }
+
+    .generate-btn:hover::before {
+      left: 100%;
+    }
+
+    .clear-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 25px;
+    }
+
+    .left-panel, .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .players-list {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 15px;
+      border-radius: 16px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      transition: 0.3s ease;
+    }
+
     .players-list:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
     }
 
     .player-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 10px 12px;
-  margin-bottom: 8px;
-
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  border-radius: 12px;
-
-  transition: 0.25s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      transition: 0.25s ease;
       animation: fadeUp 0.25s ease;
     }
-    .player-item:hover,
-.member:hover {
-  transform: translateX(5px);
 
-  background: rgba(59, 130, 246, 0.08);
+    .player-item:hover, .member:hover {
+      transform: translateX(5px);
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 0 20px rgba(59,130,246,0.12);
+    }
 
-  border-color: rgba(59, 130, 246, 0.3);
+    .player-item button {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      cursor: pointer;
+      transition: 0.2s ease;
+      flex-shrink: 0;
+    }
 
-  box-shadow:
-    0 0 20px rgba(59,130,246,0.12);
-}
+    .player-item button:hover {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: rgba(239, 68, 68, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .player-name {
+      color: white;
+      font-weight: 500;
+    }
+
+    .rank-number {
+      color: #60a5fa;
+      font-weight: 700;
+      margin-right: 6px;
+      opacity: 0.9;
+    }
+
+    .player-power {
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+      min-width: 52px;
+      text-align: right;
+      background: rgba(255,255,255,0.05);
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
 
     .teams {
       display: grid;
@@ -221,458 +312,170 @@ overflow: hidden;
     }
 
     .team-box {
-  background: rgba(255, 255, 255, 0.06);
-
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  border-radius: 16px;
-  padding: 15px;
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-
-  transition: 0.3s ease;
-
-  position: relative;
-  overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 15px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+
     .team-box::after {
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  border-radius: 16px;
-
-  padding: 1px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(96,165,250,0.25),
-    rgba(167,139,250,0.08)
-  );
-
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-
-  -webkit-mask-composite: xor;
-
-  pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(96,165,250,0.25), rgba(167,139,250,0.08));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      pointer-events: none;
     }
 
-.team-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
-}
+    .team-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+    }
+
     .team-box::before {
-  content: "";
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(96,165,250,0.12), transparent 60%);
+      opacity: 0;
+      transition: 0.3s ease;
+      pointer-events: none;
+    }
 
-  position: absolute;
+    .team-box:hover::before {
+      opacity: 1;
+    }
 
-  inset: 0;
+    .team-box h2 {
+      margin-top: 0;
+      text-align: center;
+      transition: 0.25s ease;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-  background: radial-gradient(
-    circle at top,
-    rgba(96,165,250,0.12),
-    transparent 60%
-  );
-
-  opacity: 0;
-
-  transition: 0.3s ease;
-
-  pointer-events: none;
-}
-
-.team-box:hover::before {
-  opacity: 1;
-}
-.team-box h2 {
-  margin-top: 0;
-  text-align: center;
-transition: 0.25s ease;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
-  color: #e2e8f0;
-
-  padding: 10px 12px;
-  border-radius: 12px;
-
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  backdrop-filter: blur(10px);
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
     .team-box h2:hover {
-  transform: translateY(-2px);
-  background: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
     }
 
     .section-title {
-  margin-top: 20px;
-  margin-bottom: 12px;
-
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  color: #93c5fd;
-
-  font-weight: 700;
-
-  padding-left: 2px;
-
-  opacity: 0.95;
-
-  text-shadow: 0 0 12px rgba(96,165,250,0.25);
+      margin-top: 20px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #93c5fd;
+      font-weight: 700;
+      padding-left: 2px;
+      opacity: 0.95;
+      text-shadow: 0 0 12px rgba(96,165,250,0.25);
     }
 
     .member {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 10px 12px;
-  margin-bottom: 8px;
-
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  border-radius: 12px;
-
-  transition: 0.25s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      transition: 0.25s ease;
       animation: fadeUp 0.25s ease;
-}
+    }
+
+    .team-actions {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .icon-btn {
+      padding: 8px 12px;
+      font-size: 11px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(59,130,246,0.15);
+      transform: translateY(-2px);
+    }
 
     .empty {
-  opacity: 0.45;
-
-  font-style: italic;
-
-  text-align: center;
-
-  padding: 20px;
-
-  color: #94a3b8;
-
-  letter-spacing: 1px;
+      opacity: 0.45;
+      font-style: italic;
+      text-align: center;
+      padding: 20px;
+      color: #94a3b8;
+      letter-spacing: 1px;
     }
- button:hover {
-  transform: translateY(-2px);
 
-  filter: brightness(1.08);
-
-  box-shadow:
-    0 0 15px rgba(255,255,255,0.15);
- }
-    button:active {
-  transform: scale(0.97);
-    }
-  .top-header {
-  text-align: center;
-  margin-bottom: 35px;
-  padding: 28px 24px;
-
-  border-radius: 20px;
-
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-
-  position: relative;
-  overflow: hidden;
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.top-header:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 14px 50px rgba(59, 130, 246, 0.25),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-}
-
-.top-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background: radial-gradient(
-    circle at top,
-    rgba(96, 165, 250, 0.18),
-    transparent 60%
-  );
-
-  pointer-events: none;
-}
-
-.top-header::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.25),
-    transparent
-  );
-
-  pointer-events: none;
-}
-
-.subtitle {
-  color: #94a3b8;
-  margin-top: 10px;
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  opacity: 0.9;
-}
-    .live-dot {
-  width: 8px;
-  height: 8px;
-
-  display: inline-block;
-
-  border-radius: 50%;
-
-  background: #22c55e;
-
-  margin-right: 8px;
-
-  box-shadow:
-    0 0 10px #22c55e;
-    }
-  .dashboard-layout {
-  display: grid;
-
-  grid-template-columns: 1fr 1.2fr;
-
-  gap: 25px;
-}
-
-.left-panel,
-.right-panel {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 20px;
-}
     @media (max-width: 900px) {
-
-  .dashboard-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .teams {
-    grid-template-columns: 1fr;
-  }
-
-  .input-box {
-    flex-direction: column;
-  }
-
-  button {
-    width: 100%;
-  }
-
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+      .teams {
+        grid-template-columns: 1fr;
+      }
+      .input-box {
+        flex-direction: column;
+      }
+      button {
+        width: 100%;
+      }
     }
-    body::before,
-body::after {
-  content: "";
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  filter: blur(80px);
-  z-index: -1;
-  opacity: 0.4;
-}
-    body::before {
-  background: #7c3aed;
-  top: -50px;
-  left: -50px;
-    }
-    body::after {
-  background: #3b82f6;
-  bottom: -80px;
-  right: -80px;
-    }
-  .player-item button {
-  width: 28px;
-  height: 28px;
 
-  padding: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 8px;
-
-  background: rgba(239, 68, 68, 0.12);
-
-  border: 1px solid rgba(239, 68, 68, 0.2);
-
-  color: #fca5a5;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-
-  flex-shrink: 0;
-}
-
-.player-item button:hover {
-  background: rgba(239, 68, 68, 0.22);
-
-  border-color: rgba(239, 68, 68, 0.35);
-
-  transform: translateY(-1px);
-}
-  .team-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-}
-
-.icon-btn {
-  padding: 8px 12px;
-  font-size: 11px;
-  border-radius: 10px;
-
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-
-  color: white;
-  cursor: pointer;
-
-  backdrop-filter: blur(10px);
-  transition: 0.2s ease;
-}
-
-.icon-btn:hover {
-  background: rgba(59,130,246,0.15);
-  transform: translateY(-2px);
-}
-    .player-info {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  width: 100%;
-
-  gap: 12px;
-}
-
-.player-name {
-  color: white;
-
-  font-weight: 500;
-}
-
-.player-power {
-  color: #94a3b8;
-
-  font-weight: 600;
-
-  font-size: 14px;
-
-  letter-spacing: 0.5px;
-
-  flex-shrink: 0;
-
-  min-width: 52px;
-
-  text-align: right;
-  background: rgba(255,255,255,0.05);
-  padding: 4px 8px;
-  border-radius: 999px;
-}
     @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    ::-webkit-scrollbar {
-  width: 10px;
-}
 
-::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.03);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.12);
-
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(96,165,250,0.35);
-}
-    .rank-number {
-  color: #60a5fa;
-
-  font-weight: 700;
-
-  margin-right: 6px;
-
-  opacity: 0.9;
+    @keyframes fadePage {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-  @keyframes fadePage {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,0.35); }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="top-header">
-
-  <h1>OPAA Team Dashboard</h1>
-<p class="subtitle">
-  <span class="live-dot"></span>
-  One Piece Alliance • Team Management System
-</p>
-
-</div>
+      <h1>OPAA Team Dashboard</h1>
+      <p class="subtitle">
+        <span class="live-dot"></span>
+        One Piece Alliance • Team Management System
+      </p>
+    </div>
 
     <div class="input-box">
       <input type="text" id="name" placeholder="Player Name" />
@@ -683,375 +486,296 @@ body::after {
     <button class="generate-btn" onclick="generateTeams()">
       Generate Teams
     </button>
-<div id="announcementAdminPanel" style="display:none;">
 
-  <button class="generate-btn" onclick="generateAnnouncement('A')">
-    Generate Team A Position
-  </button>
+    <div id="announcementAdminPanel" style="display:none;">
+      <button class="generate-btn" onclick="generateAnnouncement('A')">
+        Generate Team A Position
+      </button>
+      <button class="generate-btn" onclick="generateAnnouncement('B')">
+        Generate Team B Position
+      </button>
+    </div>
 
-  <button class="generate-btn" onclick="generateAnnouncement('B')">
-    Generate Team B Position
-  </button>
-
-</div>
-    <button 
-  id="clearBtn"
-  class="clear-btn" 
-  onclick="clearPlayers()"
-  style="display:none;"
->
-  Clear All Players
+    <button id="clearBtn" class="clear-btn" onclick="clearPlayers()" style="display:none;">
+      Clear All Players
     </button>
-<div class="dashboard-layout">
 
-<div class="left-panel">
-    <div class="players-list">
-      <h2>Player List</h2>
-      <div id="players"></div>
-    </div>
-<div 
-  id="announcementBoxContainer"
-  class="players-list"
-  style="display:none;"
->
-  <h2>Announcement</h2>
-
-  <textarea
-    id="announcementBox"
-    style="
-      width:100%;
-      height:500px;
-      background: rgba(255,255,255,0.05);
-border: 1px solid rgba(255,255,255,0.08);
-backdrop-filter: blur(10px);
-      color:white;
-      padding:15px;
-      border-radius:10px;
-      resize:vertical;
-    "
-  ></textarea>
-
-  <button
-    class="generate-btn"
-    onclick="copyAnnouncement()"
-    style="margin-top:10px;"
-  >
-    Copy Announcement
-  </button>
-</div>
-  
-  </div>
-
-<div class="right-panel">
-    <div class="teams">
-      <div class="team-box">
-        <h2 id="teamATitle">
-  TEAM A (ODD)
-        </h2>
-        <h3 class="section-title">Main Team</h3>
-        <div id="teamAMain"></div>
-
-        <h3 class="section-title">Substitute</h3>
-        <div id="teamASub"></div>
-      <div class="team-actions">
-  <button class="icon-btn" onclick="copyTeam('A')">⧉ Copy Team</button>
-      </div>
+    <div class="dashboard-layout">
+      <div class="left-panel">
+        <div class="players-list">
+          <h2>Player List</h2>
+          <div id="players"></div>
+        </div>
+        <div id="announcementBoxContainer" class="players-list" style="display:none;">
+          <h2>Announcement</h2>
+          <textarea id="announcementBox" style="width:100%; height:500px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); color:white; padding:15px; border-radius:10px; resize:vertical;"></textarea>
+          <button class="generate-btn" onclick="copyAnnouncement()" style="margin-top:10px;">
+            Copy Announcement
+          </button>
+        </div>
       </div>
 
-      <div class="team-box">
-        <h2 id="teamBTitle">
-  TEAM B (EVEN)
-        </h2>
-        <h3 class="section-title">Main Team</h3>
-        <div id="teamBMain"></div>
+      <div class="right-panel">
+        <div class="teams">
+          <div class="team-box">
+            <h2 id="teamATitle">TEAM A (ODD)</h2>
+            <h3 class="section-title">Main Team</h3>
+            <div id="teamAMain"></div>
+            <h3 class="section-title">Substitute</h3>
+            <div id="teamASub"></div>
+            <div class="team-actions">
+              <button class="icon-btn" onclick="copyTeam('A')">⧉ Copy Team</button>
+            </div>
+          </div>
 
-        <h3 class="section-title">Substitute</h3>
-        <div id="teamBSub"></div>
-      <div class="team-actions">
-  <button class="icon-btn" onclick="copyTeam('B')">⧉ Copy Team</button>
-      </div>
+          <div class="team-box">
+            <h2 id="teamBTitle">TEAM B (EVEN)</h2>
+            <h3 class="section-title">Main Team</h3>
+            <div id="teamBMain"></div>
+            <h3 class="section-title">Substitute</h3>
+            <div id="teamBSub"></div>
+            <div class="team-actions">
+              <button class="icon-btn" onclick="copyTeam('B')">⧉ Copy Team</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-    <script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  onSnapshot,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyD7FLnKz0hq1fBIZT9UakE7h8K-IWCkHws",
-  authDomain: "opaa-team-generator.firebaseapp.com",
-  projectId: "opaa-team-generator",
-  storageBucket: "opaa-team-generator.firebasestorage.app",
-  messagingSenderId: "512103695316",
-  appId: "1:512103695316:web:76df61edd28072780fcc41"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let players = [];
-let isAdding = false;
-const isAdmin = window.location.search.includes("admin=opaa1341");
-
-async function addPlayer() {
-  if (isAdding) return;
-  isAdding = true;
-
-  const btn = document.querySelector(".add-btn");
-  btn.disabled = true;
-
-  try {
-    const name = document.getElementById('name').value.trim();
-    const power = parseFloat(document.getElementById('power').value);
-
-    if (!name || isNaN(power)) {
-      alert('Please enter valid data!');
-      return;
-    }
-
-    // normalize biar anti typo duplicate (case + spacing)
-    const normalized = name.toLowerCase();
-
-    const duplicate = players.find(
-      p => (p.name || "").toLowerCase() === normalized
-    );
-
-    if (duplicate) {
-      alert('This player name is already registered!');
-      return;
-    }
-
-    await addDoc(collection(db, "players"), {
-      name,
-      power,
-      createdAt: Date.now()
-    });
-
-    document.getElementById('name').value = '';
-    document.getElementById('power').value = '';
-
-  } finally {
-    isAdding = false;
-    btn.disabled = false;
-  }
-}
-
-window.addPlayer = addPlayer;
-async function removePlayer(id) {
-  await deleteDoc(doc(db, "players", id));
-}
-
-window.removePlayer = removePlayer;
-function renderPlayers() {
-  const container = document.getElementById('players');
-
-  if (players.length === 0) {
-    container.innerHTML = '<div class=\"empty\">No players yet</div>';
-    return;
-  }
-
-  container.innerHTML = '';
-
-  players.forEach((player, index) => {
-    container.innerHTML += `
-      <div class=\"player-item\">
-        <div class="player-info">
-  <span class="player-name">
-  <span class="rank-number">${index + 1}</span>
-  ${player.name}
-</span>
-
-  <span class="player-power">
-  ${Number(player.power).toFixed(1)}
-</span>
-</div>
-
-${isAdmin ? `
-<button onclick="removePlayer('${player.id}')">
-  ✕
-</button>
-` : ''}
-      </div>
-    `;
-  });
-
-  generateTeams();
-}
-
-function generateTeams() {
-  let teamA = [];
-  let teamB = [];
-
-  const sorted = [...players].sort((a, b) => b.power - a.power);
-
-  sorted.forEach((player, index) => {
-    const rank = index + 1;
-
-    if (rank % 2 === 1) {
-      teamA.push(player);
-    } else {
-      teamB.push(player);
-    }
-  });
-
-  teamA.sort((a, b) => b.power - a.power);
-  teamB.sort((a, b) => b.power - a.power);
-
-  renderTeam('teamAMain', teamA.slice(0, 20));
-  renderTeam('teamASub', teamA.slice(20, 30));
-
-  renderTeam('teamBMain', teamB.slice(0, 20));
-  renderTeam('teamBSub', teamB.slice(20, 30));
-}
-
-function renderTeam(id, team) {
-  const container = document.getElementById(id);
-
-  if (team.length === 0) {
-    container.innerHTML = '<div class=\"empty\">No players</div>';
-    return;
-  }
-
-  container.innerHTML = '';
-
-  team.forEach((player, index) => {
-    container.innerHTML += `
-  <div class="member">
-
-    <div class="player-info">
-
-      <span class="player-name">
-  <span class="rank-number">${index + 1}</span>
-  ${player.name}
-</span>
-
-      <span class="player-power">
-  ${Number(player.power).toFixed(1)}
-</span>
-
-    </div>
-
+  <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
+    ☠ 666 • OPAA ALLIANCE • SERVER 1341 ☠
   </div>
-`;
-  });
-}
 
-onSnapshot(collection(db, "players"), (snapshot) => {
-  players = [];
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      onSnapshot,
+      deleteDoc,
+      doc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  snapshot.forEach((docSnap) => {
-  players.push({
-    id: docSnap.id,
-    ...docSnap.data()
-  });
-});
+    const firebaseConfig = {
+      apiKey: "AIzaSyD7FLnKz0hq1fBIZT9UakE7h8K-IWCkHws",
+      authDomain: "opaa-team-generator.firebaseapp.com",
+      projectId: "opaa-team-generator",
+      storageBucket: "opaa-team-generator.firebasestorage.app",
+      messagingSenderId: "512103695316",
+      appId: "1:512103695316:web:76df61edd28072780fcc41"
+    };
 
-players.sort((a, b) => {
-  return (a.createdAt ?? 0) - (b.createdAt ?? 0);
-});
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-renderPlayers();
+    let players = [];
+    let isAdding = false;
+    const isAdmin = window.location.search.includes("admin=opaa1341");
 
-});
-  async function clearPlayers() {
-  const confirmClear = confirm("Delete all players?");
-  if (!confirmClear) return;
+    async function addPlayer() {
+      if (isAdding) return;
+      isAdding = true;
 
-  const snapshot = await getDocs(collection(db, "players"));
+      const btn = document.querySelector(".add-btn");
+      btn.disabled = true;
 
-  for (const docSnap of snapshot.docs) {
-    await deleteDoc(doc(db, "players", docSnap.id));
-  }
-}
+      try {
+        const name = document.getElementById('name').value.trim();
+        const power = parseFloat(document.getElementById('power').value);
 
-window.clearPlayers = clearPlayers;
- function copyTeam(team) {
-  let text = "";
+        if (!name || isNaN(power)) {
+          alert('Please enter valid data!');
+          return;
+        }
 
-  if (team === "A") {
-    text += "TEAM A MAIN\n";
+        const normalized = name.toLowerCase();
+        const duplicate = players.find(
+          p => (p.name || "").toLowerCase() === normalized
+        );
 
-    document.querySelectorAll("#teamAMain .member").forEach((el) => {
-      text += el.innerText + "\n";
-    });
+        if (duplicate) {
+          alert('This player name is already registered!');
+          return;
+        }
 
-    text += "\nTEAM A SUBSTITUTE\n";
+        await addDoc(collection(db, "players"), {
+          name,
+          power,
+          createdAt: Date.now()
+        });
 
-    document.querySelectorAll("#teamASub .member").forEach((el) => {
-      text += el.innerText + "\n";
-    });
-  }
+        document.getElementById('name').value = '';
+        document.getElementById('power').value = '';
 
-  if (team === "B") {
-    text += "TEAM B MAIN\n";
-
-    document.querySelectorAll("#teamBMain .member").forEach((el) => {
-      text += el.innerText + "\n";
-    });
-
-    text += "\nTEAM B SUBSTITUTE\n";
-
-    document.querySelectorAll("#teamBSub .member").forEach((el) => {
-      text += el.innerText + "\n";
-    });
-  }
-
-  navigator.clipboard.writeText(text);
-
-  alert("Team copied!");
-}
-
-window.copyTeam = copyTeam;
-   if (isAdmin) {
-
-  document.getElementById("announcementAdminPanel").style.display = "block";
-
-  document.getElementById("announcementBoxContainer").style.display = "block";
-
-   }
-      if (isAdmin) {
-  document.getElementById("clearBtn").style.display = "block";
-
+      } catch (error) {
+        console.error("Error adding player: ", error);
+      } finally {
+        isAdding = false;
+        btn.disabled = false;
+      }
     }
-  function getTeamRankPlayer(team, rank) {
+    window.addPlayer = addPlayer;
 
-  let sortedPlayers = players
-    .slice()
-    .sort((a, b) => b.power - a.power);
+    async function removePlayer(id) {
+      if(confirm("Remove this player?")) {
+        await deleteDoc(doc(db, "players", id));
+      }
+    }
+    window.removePlayer = removePlayer;
 
-  let filtered = [];
+    function renderPlayers() {
+      const container = document.getElementById('players');
 
-  sortedPlayers.forEach((player, index) => {
+      if (players.length === 0) {
+        container.innerHTML = '<div class="empty">No players yet</div>';
+        return;
+      }
 
-    const globalRank = index + 1;
+      container.innerHTML = '';
 
-    if (team === "A" && globalRank % 2 === 1) {
-      filtered.push(player);
+      players.forEach((player, index) => {
+        container.innerHTML += `
+          <div class="player-item">
+            <div class="player-info">
+              <span class="player-name">
+                <span class="rank-number">${index + 1}</span>
+                ${player.name}
+              </span>
+              <span class="player-power">
+                ${Number(player.power).toFixed(1)}
+              </span>
+            </div>
+            ${isAdmin ? `<button onclick="removePlayer('${player.id}')">✕</button>` : ''}
+          </div>
+        `;
+      });
+
+      generateTeams();
     }
 
-    if (team === "B" && globalRank % 2 === 0) {
-      filtered.push(player);
+    function generateTeams() {
+      let teamA = [];
+      let teamB = [];
+
+      const sorted = [...players].sort((a, b) => b.power - a.power);
+
+      sorted.forEach((player, index) => {
+        const rank = index + 1;
+        if (rank % 2 === 1) {
+          teamA.push(player);
+        } else {
+          teamB.push(player);
+        }
+      });
+
+      teamA.sort((a, b) => b.power - a.power);
+      teamB.sort((a, b) => b.power - a.power);
+
+      renderTeam('teamAMain', teamA.slice(0, 20));
+      renderTeam('teamASub', teamA.slice(20, 30));
+
+      renderTeam('teamBMain', teamB.slice(0, 20));
+      renderTeam('teamBSub', teamB.slice(20, 30));
     }
 
-  });
+    function renderTeam(id, team) {
+      const container = document.getElementById(id);
 
-  return filtered[rank - 1]?.name || "-";
-}
+      if (team.length === 0) {
+        container.innerHTML = '<div class="empty">No players</div>';
+        return;
+      }
 
-function generateAnnouncement(team) {
+      container.innerHTML = '';
 
-  const text = `
-⚔️ DESERT STORM TEAM ${team} POSITION ⚔️
+      team.forEach((player, index) => {
+        container.innerHTML += `
+          <div class="member">
+            <div class="player-info">
+              <span class="player-name">
+                <span class="rank-number">${index + 1}</span>
+                ${player.name}
+              </span>
+              <span class="player-power">
+                ${Number(player.power).toFixed(1)}
+              </span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    onSnapshot(collection(db, "players"), (snapshot) => {
+      players = [];
+      snapshot.forEach((docSnap) => {
+        players.push({
+          id: docSnap.id,
+          ...docSnap.data()
+        });
+      });
+
+      players.sort((a, b) => (a.createdAt ?? 0) - (b.createdAt ?? 0));
+      renderPlayers();
+    });
+
+    async function clearPlayers() {
+      const confirmClear = confirm("Delete all players?");
+      if (!confirmClear) return;
+
+      const snapshot = await getDocs(collection(db, "players"));
+      for (const docSnap of snapshot.docs) {
+        await deleteDoc(doc(db, "players", docSnap.id));
+      }
+    }
+    window.clearPlayers = clearPlayers;
+
+    function copyTeam(team) {
+      let text = "";
+      if (team === "A") {
+        text += "TEAM A MAIN\n";
+        document.querySelectorAll("#teamAMain .member").forEach((el) => { text += el.innerText + "\n"; });
+        text += "\nTEAM A SUBSTITUTE\n";
+        document.querySelectorAll("#teamASub .member").forEach((el) => { text += el.innerText + "\n"; });
+      }
+      if (team === "B") {
+        text += "TEAM B MAIN\n";
+        document.querySelectorAll("#teamBMain .member").forEach((el) => { text += el.innerText + "\n"; });
+        text += "\nTEAM B SUBSTITUTE\n";
+        document.querySelectorAll("#teamBSub .member").forEach((el) => { text += el.innerText + "\n"; });
+      }
+      navigator.clipboard.writeText(text);
+      alert("Team copied!");
+    }
+    window.copyTeam = copyTeam;
+
+    if (isAdmin) {
+      document.getElementById("announcementAdminPanel").style.display = "block";
+      document.getElementById("announcementBoxContainer").style.display = "block";
+      document.getElementById("clearBtn").style.display = "block";
+    }
+
+    function getTeamRankPlayer(team, rank) {
+      let sortedPlayers = players.slice().sort((a, b) => b.power - a.power);
+      let filtered = [];
+
+      sortedPlayers.forEach((player, index) => {
+        const globalRank = index + 1;
+        if (team === "A" && globalRank % 2 === 1) {
+          filtered.push(player);
+        }
+        if (team === "B" && globalRank % 2 === 0) {
+          filtered.push(player);
+        }
+      });
+
+      return filtered[rank - 1]?.name || "-";
+    }
+
+    function generateAnnouncement(team) {
+      const text = `⚔️ DESERT STORM TEAM ${team} POSITION ⚔️
 
 FIRST STAGE (FIRST 10 MINUTES)
 
@@ -1128,27 +852,18 @@ SUBSTITUTE PLAYERS
 - ${getTeamRankPlayer(team, 27)}
 - ${getTeamRankPlayer(team, 28)}
 - ${getTeamRankPlayer(team, 29)}
-- ${getTeamRankPlayer(team, 30)}
-`;
+- ${getTeamRankPlayer(team, 30)}`;
 
-  document.getElementById("announcementBox").value = text;
-}
+      document.getElementById("announcementBox").value = text;
+    }
+    window.generateAnnouncement = generateAnnouncement;
 
-window.generateAnnouncement = generateAnnouncement;
-
-function copyAnnouncement() {
-
-  const text = document.getElementById("announcementBox").value;
-
-  navigator.clipboard.writeText(text);
-
-  alert("Announcement copied!");
-}
-
-window.copyAnnouncement = copyAnnouncement;
-    </script>
-  <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:14px;">
-  ☠ 666 • OPAA ALLIANCE • SERVER 1341 ☠
-  </div>
+    function copyAnnouncement() {
+      const text = document.getElementById("announcementBox").value;
+      navigator.clipboard.writeText(text);
+      alert("Announcement copied!");
+    }
+    window.copyAnnouncement = copyAnnouncement;
+  </script>
 </body>
 </html>
