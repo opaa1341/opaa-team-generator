@@ -1,208 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPAA | Alliance Portal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary: #60a5fa;
-            --secondary: #a78bfa;
-            --bg-dark: #05070f;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAA | Alliance Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #ffffff;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    body {
+      background: linear-gradient(135deg, #090d16, #110f24, #05070f);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      animation: fadePage 0.5s ease;
+      overflow-x: hidden;
+    }
 
-        /* The Neon Blobs you liked */
-        .blob {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.12) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(80px);
-        }
+    /* Matching Blobs from Generator */
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      filter: blur(100px);
+      z-index: -1;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    body::before {
+      background: #6366f1;
+      top: -100px;
+      left: -100px;
+    }
+    body::after {
+      background: #3b82f6;
+      bottom: -100px;
+      right: -100px;
+    }
 
-        nav {
-            width: 90%;
-            max-width: 1200px;
-            margin-top: 25px;
-            padding: 20px;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 25px;
-            z-index: 100;
-        }
+    /* Navigation Bar Matching Generator Style */
+    nav {
+        width: 95%;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 15px 25px;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 20px;
+        z-index: 100;
+    }
 
-        .logo {
-            font-weight: 800;
-            font-size: 24px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
+    .logo {
+        font-weight: 800;
+        font-size: 20px;
+        background: linear-gradient(90deg, #60a5fa, #a78bfa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 2px;
+    }
 
-        .nav-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-left: 30px;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
+    .nav-links a {
+        color: #cbd5e1;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
 
-        .nav-links a:hover {
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
-        }
+    .nav-links a:hover { color: #60a5fa; }
 
-        .hero {
-            text-align: center;
-            margin-top: 100px;
-            padding: 0 20px;
-        }
+    .container {
+      max-width: 1240px;
+      margin: auto;
+    }
 
-        .hero h1 {
-            font-size: clamp(40px, 8vw, 72px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin: 0;
-            letter-spacing: -2px;
-        }
+    /* Header Styling matching Generator */
+    .top-header {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 35px;
+      padding: 30px 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      transition: transform 0.3s ease;
+    }
 
-        .hero h1 span {
-            display: block;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .top-header:hover { transform: translateY(-3px); }
 
-        .hero p {
-            color: #94a3b8;
-            font-size: 19px;
-            max-width: 600px;
-            margin: 25px auto 50px;
-            line-height: 1.6;
-        }
+    h1 {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 3px;
+      font-size: clamp(24px, 5vw, 32px);
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #60a5fa, #c084fc, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            width: 90%;
-            max-width: 1000px;
-            margin-bottom: 100px;
-        }
+    .subtitle {
+      color: #94a3b8;
+      margin-top: 12px;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
 
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 45px;
-            border-radius: 28px;
-            text-align: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-            color: inherit;
-            backdrop-filter: blur(10px);
-        }
+    /* Grid Selection Boxes */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
 
-        .card:hover {
-            transform: translateY(-12px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--primary);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 40px;
+      border-radius: 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
 
-        .card i {
-            font-size: 44px;
-            margin-bottom: 25px;
-            color: var(--primary);
-            filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.5));
-        }
+    .card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 45px rgba(59, 130, 246, 0.15);
+    }
 
-        .card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
+    .card i {
+      font-size: 40px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .card p {
-            color: #94a3b8;
-            font-size: 15px;
-            line-height: 1.6;
-        }
+    .card h3 {
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
 
-        footer {
-            margin-top: auto;
-            padding-bottom: 40px;
-            color: #475569;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-    </style>
+    .card p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 30px;
+      opacity: 0.5;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    @keyframes fadePage {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="blob" style="top: -150px; right: -100px;"></div>
-    <div class="blob" style="bottom: -150px; left: -100px; opacity: 0.6;"></div>
+  <nav>
+    <div class="logo">OPAA ALLIANCE</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="generator.html">Team Maker</a>
+        <a href="buff.html">Buffs</a>
+    </div>
+  </nav>
 
-    <nav>
-        <div class="logo">OPAA ALLIANCE</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="generator.html">Team Maker</a>
-            <a href="buff.html">Buffs</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <h1>ALLIANCE <span>PORTAL</span></h1>
-        <p>Strategic management platform for OPAA Server 1341. Coordinate squad distributions and monitor alliance activity efficiently.</p>
-    </section>
+  <div class="container">
+    <div class="top-header">
+      <h1>Alliance Portal</h1>
+      <p class="subtitle">Management System • Server 1341</p>
+    </div>
 
     <div class="menu-grid">
-        <a href="generator.html" class="card">
-            <i class="fa-solid fa-users-viewfinder"></i>
-            <h3>Team Generator</h3>
-            <p>Automatically calculate and distribute player squads for Desert Storm based on power metrics.</p>
-        </a>
+      <a href="generator.html" class="card">
+        <i class="fa-solid fa-users-gear"></i>
+        <h3>Team Generator</h3>
+        <p>Distribute alliance members into squads based on power levels for Desert Storm coordination.</p>
+      </a>
 
-        <a href="buff.html" class="card">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <h3>Buff Schedule</h3>
-            <p>Access real-time schedules for alliance buff activations and tactical coordination.</p>
-        </a>
+      <a href="buff.html" class="card">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <h3>Buff Schedule</h3>
+        <p>View activation timings and tactical reinforces to maximize alliance performance.</p>
+      </a>
     </div>
 
     <footer>
-        ONE PIECE ALLIANCE • S1341 • EST. 2026
+      ☠ 666 • ONE PIECE ALLIANCE • EST. 2026 ☠
     </footer>
+  </div>
 
 </body>
 </html>
