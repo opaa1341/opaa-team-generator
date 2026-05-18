@@ -458,24 +458,30 @@
       right: -100px;
     }
 
-    .container {
-      max-width: 1240px;
-      margin: auto;
-    }
+.container {
+  width: 100%;
+  max-width: 1240px; 
+  margin: auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
 
     .top-header {
-      text-align: center;
-      margin-bottom: 35px;
-      padding: 30px 24px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  margin: 0 auto 35px auto; 
+  padding: 30px 24px;
+  width: 100%;             
+  max-width: 1240px;       
+  box-sizing: border-box;  
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .top-header:hover {
@@ -802,20 +808,21 @@
     }
     
 nav {
-    width: 95%;
-    max-width: 1200px;
-    margin: 15px auto;
-    padding: 12px 20px;
+    width: 100%; 
+    max-width: 1240px;
+    margin: 20px auto;
+    padding: 15px 25px;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px; 
+    border-radius: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box; /
     position: sticky;
-    top: 15px;
+    top: 20px;
     z-index: 100;
 }
 
@@ -848,18 +855,20 @@ nav {
 
 @media (max-width: 600px) {
     nav {
-        padding: 10px 15px;
-        width: 92%;
+        padding: 12px 15px;
+        width: 100%; 
+        border-radius: 16px;
     }
     
     .logo {
-        font-size: 14px; /
+        font-size: 15px;
     }
 
     .nav-links a {
         margin-left: 10px;
-        font-size: 10px; /
+        font-size: 10px;
     }
+}
     
     .top-header h1 {
         font-size: 22px;
@@ -898,7 +907,6 @@ nav {
     </div>
   </nav>
   <div class="container">
-    <div class="top-header">
       <h1>OPAA Team Dashboard</h1>
       <p class="subtitle">
         <span class="live-dot"></span>
